@@ -1,5 +1,3 @@
-CREATE DATABASE products_microservice;
-
 CREATE TYPE product_gender AS ENUM ('F', 'M');
 CREATE TYPE product_size AS ENUM('S', 'M', 'L');
 
@@ -17,15 +15,16 @@ CREATE TABLE products(
     price NUMERIC(12,2),
     in_store BOOLEAN NOT NULL DEFAULT FALSE,
     available BOOLEAN NOT NULL DEFAULT TRUE,
+    fk_category_product INT NULL,
     CONSTRAINT fk_category_product
         FOREIGN KEY(fk_category_product)
-            REFERENCES categories
+            REFERENCES categories(pk_category)
 );
 
 CREATE TABLE images(
     pk_images INT PRIMARY KEY NOT NULL,
     position SMALLINT NOT NULL DEFAULT 1,
-    url TEXT NOT NULL,
+    url TEXT NOT NULL
 );
 
 CREATE TABLE discounts(
@@ -38,10 +37,12 @@ CREATE TABLE discounts(
 
 CREATE TABLE products_discounts(
     pk_product_discount INT PRIMARY KEY NOT NULL,
+    fk_product_pd INT NOT NULL,
+    fk_discount_pd INT NOT NULL,
     CONSTRAINT fk_product_pd
         FOREIGN KEY(fk_product_pd)
-            REFERENCES products
+            REFERENCES products(pk_product),
     CONSTRAINT fk_discount_pd
-        FOREIGN KEY(fk_discount_pd)
-            REFERENCES discounts
+        FOREIGN KEY (fk_discount_pd)
+            REFERENCES discounts (pk_discount)
 );
