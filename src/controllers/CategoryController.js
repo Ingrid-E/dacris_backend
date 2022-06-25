@@ -1,5 +1,4 @@
-const client = require("../database/keys")
-
+const client = require("../../database/keys")
 module.exports = {
     category_create_post : async function(req,res){
         const {name, gender} = req.body
