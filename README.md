@@ -1,5 +1,5 @@
-# users-microservices
-Microservice for user administration 👧 written in express.js 
+# product-microservices
+Microservice for products managment 👧 written in express.js 
 
 Route folder
 -Incluides all of the diferent routes
