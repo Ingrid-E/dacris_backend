@@ -22,7 +22,7 @@ CREATE TABLE products(
 );
 
 CREATE TABLE images(
-    pk_images SERIAL PRIMARY KEY,
+    pk_image SERIAL PRIMARY KEY,
     fk_product_images INT,
     position SMALLINT NOT NULL DEFAULT 1,
     url TEXT NOT NULL,
