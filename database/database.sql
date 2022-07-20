@@ -21,6 +21,16 @@ CREATE TABLE products(
             REFERENCES categories(pk_category)
 );
 
+CREATE TABLE users(
+    pk_user SERIAL PRIMARY KEY,
+    firstname VARCHAR(60) NOT NULL,
+    lastname VARCHAR(60) NOT NULL,
+    email VARCHAR(200) NOT NULL,
+    password VARCHAR(250) NOT NULL,
+    lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    refresh_token VARCHAR(500) NULL
+);
+
 CREATE TABLE images(
     pk_image SERIAL PRIMARY KEY,
     fk_product_images INT,
