@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require("express")
 const app = express()
 const pkg = require("../package.json")
+const jwt = require('jsonwebtoken')
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
@@ -15,7 +16,10 @@ app.get("/", (req, res) => {
     })
 })
 
+
 //Routes
+const userRoute = require('./routes/Users')
+app.use('/users',userRoute)
 const productRoute = require('./routes/Products/Products')
 app.use('/product',productRoute)
 const categoryRoute = require('./routes/Products/Categories')
