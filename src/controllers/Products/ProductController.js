@@ -1,4 +1,4 @@
-const client = require("../../database/keys")
+const client = require("../../../database/keys")
 
 
 module.exports = {

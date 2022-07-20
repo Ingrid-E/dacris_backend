@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const controller = require('../controllers/ImageController')
+const controller = require('../../controllers/Products/ImageController')
 
 
 router.get("/", controller.image_all_get)

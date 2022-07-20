@@ -1,4 +1,4 @@
-const client = require("../../database/keys")
+const client = require("../../../database/keys")
 module.exports = {
     discount_create_post : async function(req,res){
         const {name, percentage, start_date, end_date} = req.body
