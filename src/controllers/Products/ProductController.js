@@ -33,12 +33,17 @@ module.exports = {
         }
     },
     product_all_get: async function(req, res){
+        const {filter} = req.body
+        let query = ``
+        console.log(filter)
+        if(filter === undefined || filter === ''){
+            query = `SELECT * FROM products`
+        }else{
+            query = `SELECT * FROM products WHERE name ilike '%${filter}%'`
+        }
+        console.log(query)
         try{
-            const response = await client.query(
-                `
-                SELECT * FROM products
-                `
-            )
+            const response = await client.query(query)
             return res.status(200).send(response.rows)
         }catch(error){
             return res.status(500).send("SERVER_ERROR")
