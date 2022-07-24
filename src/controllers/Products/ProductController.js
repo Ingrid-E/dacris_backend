@@ -33,6 +33,14 @@ module.exports = {
         }
     },
     product_all_get: async function(req, res){
+        try{
+            const response = await client.query(`SELECT * FROM products`)
+            return res.status(200).send(response.rows)
+        }catch(error){
+            return res.status(500).send("SERVER_ERROR")
+        }
+    },
+    products_filter_post: async function(req, res){
         const {filter} = req.body
         let query = ``
         console.log(filter)
