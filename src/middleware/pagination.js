@@ -34,7 +34,7 @@ module.exports = {
             if (filter === undefined || filter === '') {
                 query = `SELECT * FROM products ORDER BY pk_product LIMIT ${limit} OFFSET ${startIndex}`
             } else {
-                query = `SELECT * FROM products WHERE name ilike %${filter}% ORDER BY pk_product LIMIT ${limit} OFFSET ${startIndex}`
+                query = `SELECT * FROM products WHERE name ilike '%${filter}%' ORDER BY pk_product LIMIT ${limit} OFFSET ${startIndex}`
             }
             console.log(query)
             try {
