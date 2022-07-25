@@ -1,7 +1,7 @@
 const client = require("../../../database/keys")
 
-
 module.exports = {
+
     product_create_post : async function(req,res){
         const {name, description, price, size, id_category} = req.body
         try {
@@ -39,6 +39,9 @@ module.exports = {
         }catch(error){
             return res.status(500).send("SERVER_ERROR")
         }
+    },
+    product_pagination_get: async function(req, res){
+        res.status(400).send(res.products)
     },
     products_filter_post: async function(req, res){
         const {filter} = req.body

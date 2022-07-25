@@ -1,10 +1,6 @@
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-
-
-
-
 module.exports = {
 
     verify_auth : (req, res, next) => {
