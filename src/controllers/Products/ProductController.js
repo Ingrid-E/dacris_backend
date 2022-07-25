@@ -68,7 +68,7 @@ module.exports = {
             DELETE FROM products WHERE pk_product = ${product_id}
             `
             )
-            return res.status(401).send({message: "Product deleted"})
+            return res.status(204).send({message: "Product deleted"})
         }catch(error){
             if(error.status == 400){
                 return res.status(404).send({message: "Product not found"})
