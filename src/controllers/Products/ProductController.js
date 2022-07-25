@@ -41,18 +41,18 @@ module.exports = {
         }
     },
     product_pagination_get: async function(req, res){
-        res.status(400).send(res.products)
+        return res.status(202).send({products: res.products, length: res.length})
     },
     products_filter_post: async function(req, res){
         const {filter} = req.body
         let query = ``
-        console.log(filter)
+
         if(filter === undefined || filter === ''){
             query = `SELECT * FROM products`
         }else{
             query = `SELECT * FROM products WHERE name ilike '%${filter}%'`
         }
-        console.log(query)
+
         try{
             const response = await client.query(query)
             return res.status(200).send(response.rows)
