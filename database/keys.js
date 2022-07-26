@@ -23,4 +23,4 @@ const client = new Pool(process.env.NODE_ENV === "production"? proConfig: devCon
 
 client.connect();
 
-module.exports = client;
+module.exports = client; 
