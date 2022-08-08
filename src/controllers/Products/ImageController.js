@@ -1,15 +1,47 @@
 const client = require("../../../database/keys")
+const aws = require('aws-sdk')
+const multer = require('multer')
+const multerS3 = require('multer-s3')
+
+const s3 = new aws.S3({
+    accessKeyId : process.env.S3_ACCESS_KEY,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+    region: process.env.S3_BUCKET_REGION
+})
+
+const upload = () => multer({
+    storage: multerS3({
+         s3,
+        bucket: process.env.S3_BUCKET_NAME,
+        metadata: function(req, file, cb){
+            cb(null, {fieldName: file.fieldname})
+        },
+        key: function(req, file, cb){
+            let imagename = file["originalname"].split(".")
+            cb(null, `${imagename[0]}-${Date.now()}.${imagename[1]}`)
+        }
+    })
+})
 
 module.exports = {
     image_create_post : async function(req,res){
-        const {product_id, position, url} = req.body
+        const imageUpload = upload().single('image-upload')
+        let imageURL =''
+        imageUpload(req, res, err => {
+            if (err)
+            return res.status(400).json({ success: false, message: err.message })
+            imageURL =  req.file.location
+        })
+        console.log(imageURL)
+        const {product_id, position} = req.body
+        console.log(product_id, position, imageURL)
         try {
             await client.query(
                 `
                 INSERT INTO images (fk_product_images, position, url)
                 VALUES ($1, $2, $3)
                 `,
-            [product_id, position, url])
+            [product_id, position, imageURL])
             return res.status(201).send("Image Created")
         }catch(error){
             return res.status(500).send("SERVER_ERROR")

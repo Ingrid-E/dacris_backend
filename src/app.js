@@ -3,9 +3,11 @@ const express = require("express")
 const app = express()
 const pkg = require("../package.json")
 const jwt = require('jsonwebtoken')
+const cors = require('cors')
+const bodyParser = require('body-parser')
 
-app.use(express.urlencoded({extended: false}))
-app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.get("/", (req, res) => {
     res.json({
@@ -15,6 +17,14 @@ app.get("/", (req, res) => {
         version: pkg.version
     })
 })
+
+var origins = {
+    origin: ['http://localhost:8080'],
+    optionsSuccessStatus: 200,
+    credentials: false
+}
+
+app.use(cors(origins))
 
 
 //Routes
