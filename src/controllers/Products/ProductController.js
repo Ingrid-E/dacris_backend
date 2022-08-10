@@ -3,15 +3,16 @@ const client = require("../../../database/keys")
 module.exports = {
 
     product_create_post : async function(req,res){
-        const {name, description, price, size, id_category} = req.body
+        console.log("Posting Product")
+        const {name, description, price, size, id_category, in_store, available} = req.body
         try {
             const response = await client.query(
                 `
-                INSERT INTO products (name, description, price, size, fk_category_product)
-                VALUES ($1, $2, $3, $4, $5) RETURNING pk_product
+                INSERT INTO products (name, description, price, size, fk_category_product, in_store, available)
+                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING pk_product
                 `,
-            [name, description, price, size, id_category])
-            return res.status(201).send({message: "Product Created", product_id: response.rows[0].pk_product})
+            [name, description, price, size, id_category, in_store, available])
+            return res.status(201).send({success: true, product_id: response.rows[0].pk_product})
         }catch(error){
             return res.status(500).send("SERVER_ERROR")
         }
