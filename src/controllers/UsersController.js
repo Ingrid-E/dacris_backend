@@ -6,6 +6,25 @@ const { generate_access_token } = require("../middleware/authJwt")
 require('dotenv').config()
 
 module.exports = {
+    user_join_post : async function(req,res){
+        try {
+            const {email,password} = req.body;
+            const response = await client.query("SELECT password FROM users WHERE email=$1", [email]);
+
+            if(response.rowCount === 0){
+                return res.status(404).json({success:false});
+            }
+
+            if(await bycrypt.compare(password, response.rows[0].password)){
+                return res.status(200).json({success:true});
+            }else{
+                return res.status(403).json({success:false});
+            }
+            
+            } catch (error) {
+                return res.status(500).json({success:false});
+            }
+    },
     user_create_post : async function(req,res){
         const {firstname, lastname, email, password} = req.body
         try {
