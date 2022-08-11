@@ -82,7 +82,7 @@ module.exports = {
     product_update_put: async function(req,res){
         try{
             const {product_id} = req.params
-            const {name, description, price, store, available, category_id, size} = req.body
+            const {name, description, price, in_store, available, id_category, size} = req.body
             await client.query(
             `
             UPDATE products SET
@@ -95,11 +95,11 @@ module.exports = {
             size = $7
             WHERE pk_product = $8
             `,
-            [name, description, price, store, available, category_id, size, product_id])
-            return res.status(200).send({message: "Product Updated"})
+            [name, description, price, in_store, available, id_category, size, product_id])
+            return res.status(200).json({success: true})
         }catch(error){
             console.error(error)
-            return res.status(500).send("SERVER_ERROR")
+            return res.status(500).json({success: false})
         }
     }
 
