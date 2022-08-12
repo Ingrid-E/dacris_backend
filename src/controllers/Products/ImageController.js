@@ -30,17 +30,17 @@ module.exports = {
         }
     },
     image_get : async function(req,res){
-        const {image_id} = req.params
+        const {product_id} = req.params
         try{
             const response = await client.query(
                 `
-                SELECT * FROM images WHERE pk_image = ${image_id}
+                SELECT * FROM images WHERE fk_product_images = ${product_id}
                 `
             )
-            if(response.rowCount < 1) return res.status(404).send({message: "IMAGE DOESNT EXISTS"})
-            return res.status(200).send(response.rows[0])
+            if(response.rowCount < 1) return res.status(404).json({success: false})
+            return res.status(200).json({success: true, images: response.rows})
         }catch(error){
-            return res.status(500).send("SERVER_ERROR")
+            return res.status(500).json({success: false})
         }
     },
     image_del: async function(req, res){
@@ -51,9 +51,9 @@ module.exports = {
             DELETE FROM images WHERE pk_image = ${image_id}
             `
             )
-            return res.status(401).send({message: "Image deleted"})
+            return res.status(200).json({success: true})
         }catch(error){
-            return res.status(500).send("SERVER_ERROR")
+            return res.status(500).json({success: false})
         }
     },
     image_update_put: async function(req,res){
