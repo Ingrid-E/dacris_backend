@@ -14,6 +14,7 @@ module.exports = {
             [name, description, price, size, id_category, in_store, available])
             return res.status(201).send({success: true, product_id: response.rows[0].pk_product})
         }catch(error){
+            console.log(error)
             return res.status(500).send("SERVER_ERROR")
         }
     },
