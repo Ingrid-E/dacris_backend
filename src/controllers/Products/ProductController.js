@@ -5,15 +5,17 @@ module.exports = {
     product_create_post : async function(req,res){
         console.log("Posting Product")
         const {name, description, price, size, id_category, in_store, available} = req.body
+        const clearPrice = Math.trunc(price);
         try {
             const response = await client.query(
                 `
                 INSERT INTO products (name, description, price, size, fk_category_product, in_store, available)
                 VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING pk_product
                 `,
-            [name, description, price, size, id_category, in_store, available])
+            [name, description, clearPrice, size, id_category, in_store, available])
             return res.status(201).send({success: true, product_id: response.rows[0].pk_product})
         }catch(error){
+            console.log(error)
             return res.status(500).send("SERVER_ERROR")
         }
     },
