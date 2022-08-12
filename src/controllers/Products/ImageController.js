@@ -51,9 +51,9 @@ module.exports = {
             DELETE FROM images WHERE pk_image = ${image_id}
             `
             )
-            return res.status(401).send({message: "Image deleted"})
+            return res.status(200).json({success: true})
         }catch(error){
-            return res.status(500).send("SERVER_ERROR")
+            return res.status(500).json({success: false})
         }
     },
     image_update_put: async function(req,res){
