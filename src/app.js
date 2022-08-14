@@ -41,6 +41,12 @@ app.use('/product_category',categoryRoute)
 const imageRoute = require('./routes/Products/Images')
 app.use('/product_images',imageRoute)
 
+const newRoute = require('./routes/Products/NewProducts')
+app.use('/new_products',newRoute)
+
+const bestRoute = require('./routes/Products/BestSellers')
+app.use('/best_sellers',bestRoute)
+
 const discountRoute = require('./routes/Products/Discounts')
 app.use('/product/discount',discountRoute)
 
