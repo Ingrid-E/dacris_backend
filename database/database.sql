@@ -31,6 +31,22 @@ CREATE TABLE users(
     refresh_token VARCHAR(500) NULL
 );
 
+CREATE TABLE newProducts(
+    pk_newproduct SERIAL PRIMARY KEY,
+    fk_product_new INT UNIQUE,
+    CONSTRAINT fk_product_new
+        FOREIGN KEY(fk_product_new)
+            REFERENCES products(pk_product)
+);
+
+CREATE TABLE bestSellers(
+    pk_bestseller SERIAL PRIMARY KEY,
+    fk_product_bestseller INT UNIQUE,
+    CONSTRAINT fk_product_bestseller
+        FOREIGN KEY(fk_product_bestseller)
+            REFERENCES products(pk_product)
+);
+
 CREATE TABLE images(
     pk_image SERIAL PRIMARY KEY,
     fk_product_images INT,
