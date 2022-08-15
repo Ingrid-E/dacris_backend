@@ -19,10 +19,11 @@ module.exports = {
             }
         }
     },
-    filterPagination: () => {
+    product_filterPagination: () => {
+        
         return async (req, res, next) => {
+            console.log("PRODUCT PAGINATION")
             let { page, limit, filter } = req.query
-            //const length = await client.query(`SELECT COUNT(*) FROM products`)
             const startIndex = (page - 1) * limit
             try {
                 var response, length
@@ -35,6 +36,33 @@ module.exports = {
                     response = await client.query(`SELECT * FROM products WHERE name ILIKE ${filter} ORDER BY pk_product LIMIT $1 OFFSET $2`, [ limit, startIndex])
                 }
 
+                res.length = length.rows[0]
+                res.products = response.rows
+                console.log(res.length)
+                next()
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    },
+
+    bestSellers_filterPagination: () => {
+        
+        return async (req, res, next) => {
+            console.log("BESTSELLERS")
+            let { page, limit, filter } = req.query
+            const startIndex = (page - 1) * limit
+            try {
+                var response, length
+                if (filter === undefined || filter === '') {
+                    length = await client.query(`SELECT COUNT(*) FROM bestSellers`)
+                    response = await client.query(`SELECT * FROM bestSellers ORDER BY pk_bestseller LIMIT $1 OFFSET $2`, [limit, startIndex])
+                } else {
+                    filter = "'"+filter + "%'"
+                    length = await client.query(`SELECT COUNT(*) FROM bestSellers WHERE name ILIKE ${filter}`)
+                    response = await client.query(`SELECT * FROM bestSellers WHERE name ILIKE ${filter} ORDER BY pk_bestseller LIMIT $1 OFFSET $2`, [limit, startIndex])
+                }
+                console.log(response)
                 res.length = length.rows[0]
                 res.products = response.rows
                 next()

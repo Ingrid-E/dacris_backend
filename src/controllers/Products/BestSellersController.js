@@ -15,6 +15,9 @@ module.exports = {
             return res.status(500).send({ success: false})
         }
     },
+    bestsellers_pagination_get: async function(req, res){
+        return res.status(202).send({products: res.products, length: res.length})
+    },
     bestsellers_all_get : async function(req,res){
         try{
             const response = await client.query(
